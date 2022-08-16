@@ -18,7 +18,7 @@ pip3 install -r requirements.txt
 
 ### ttf2dxf example
 ```
-ttf2dxf -f ./Arial.ttf -t "Hallo" -o text.dxf
+ttf2dxf -f ./Arial.ttf -t "ttf2dxf" -o text.dxf
 ```
 
 ![gcodepreview](https://raw.githubusercontent.com/multigcs/ttf2dxf/main/docs/ttf2dxf.png)
