@@ -1,4 +1,4 @@
-# dxfbox
+# ttf2dxf
 
 simple python based ttf to dxf converter
 
