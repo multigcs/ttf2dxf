@@ -21,4 +21,4 @@ pip3 install -r requirements.txt
 ttf2dxf -f ./Arial.ttf -t "Hallo" -o text.dxf
 ```
 
-![gcodepreview](https://raw.githubusercontent.com/multigcs/ttf2dxf/main/docs/sample.png)
+![gcodepreview](https://raw.githubusercontent.com/multigcs/ttf2dxf/main/docs/ttf2dxf.png)
