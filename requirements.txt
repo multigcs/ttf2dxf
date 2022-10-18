@@ -1,2 +1,6 @@
 ezdxf
-freetype-py
+numpy
+opencv-python
+Pillow
+scipy
+python-sane
