@@ -4,6 +4,8 @@ import freetype
 import ezdxf
 
 
+
+
 def quadratic_bezier(t, points):
     B_x = (1 - t) * ((1 - t) * points[0][0] + t * points[1][0]) + t * (
         (1 - t) * points[1][0] + t * points[2][0]
@@ -60,12 +62,36 @@ def conic_to(a, b, ctx):
         t += 0.1
 
 
+def point_of_line(p_1, p_2, line_pos):
+    return [
+        p_1[0] + (p_2[0] - p_1[0]) * line_pos,
+        p_1[1] + (p_2[1] - p_1[1]) * line_pos,
+    ]
+
+
 def cubic_to(a, b, c, ctx):
-    print(
-        "UNSUPPORTED 2nd Cubic Bezier: {},{} {},{} {},{}".format(
-            a.x, a.y, b.x, b.y, c.x, c.y
-        )
-    )
+    start = ctx["last"]
+    t = 0.0
+    while t <= 1.0:
+        ctrl1 = (a.x * ctx["scale"][0] + ctx["pos"][0], a.y * ctx["scale"][1] + ctx["pos"][1])
+        ctrl2 = (b.x * ctx["scale"][0] + ctx["pos"][0], b.y * ctx["scale"][1] + ctx["pos"][1])
+        nextp = (c.x * ctx["scale"][0] + ctx["pos"][0], c.y * ctx["scale"][1] + ctx["pos"][1])
+        curv_pos = t
+
+        ctrl3ab = point_of_line(start, ctrl1, curv_pos)
+        ctrl3bc = point_of_line(ctrl1, ctrl2, curv_pos)
+        ctrl3 = point_of_line(ctrl3ab, ctrl3bc, curv_pos)
+        ctrl4ab = point_of_line(ctrl1, ctrl2, curv_pos)
+        ctrl4bc = point_of_line(ctrl2, nextp, curv_pos)
+        ctrl4 = point_of_line(ctrl4ab, ctrl4bc, curv_pos)
+        point = point_of_line(ctrl3, ctrl4, curv_pos)
+
+        ctx["max"] = max(ctx["max"], point[0])
+        ctx["lines"].append((ctx["last"], point))
+        ctx["last"] = point
+        ctx["contours"][-1].append(point)
+        t += 0.1
+
 
 
 def main():
